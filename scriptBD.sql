@@ -1,12 +1,11 @@
-CREATE DATABASE proyectoWeb;
+CREATE USER super_admin with encrypted password '1234';
 
-CREATE TABLE mochilas
-(nombre VARCHAR(35) NOT NULL, 
-descuento int NOT NULL,
+CREATE DATABASE proyecto_web OWNER super_admin;
 
-);
+\c proyecto_web;
 
-CREATE TABLE usuarios
+CREATE TABLE tipo_usuario
 (
-
+	id_tipo_usuario		serial		primary key,
+	tipo_usuario		VARCHAR(30)	NOT NULL 
 );
