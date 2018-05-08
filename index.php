@@ -20,7 +20,13 @@
 			</footer>
 			<p>Hola</p>
 		</div>
+
+      	</body>
+	<footer>
+		Visita nuestras redes sociales</br>
 		
-        </body>
+		P&aacutegina realizada por:  </br>Ricardo Hern&aacutendez  </br>Karen Padilla
+	</footer>
+
 </html>
 
