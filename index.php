@@ -4,29 +4,44 @@
         <head>
                 <meta charset = "utf-8"/>
                 <meta name = "viewport" content = "width=device-width"/>
+				<link rel = "stylesheet" href = "css/bootstrap.css"/>
                 <link rel = "stylesheet" href = "css/main.css"/>
-                <script src="jquery-3.3.1.js"></script>
         </head>
+
         <body>
-		<div class = "pagina">
-			<header>
-				<h1>Mochilas RiMo</h1>
-			</header>
-			<main>
-				<a href = ""></a>
-			</main>
-			<footer>
+			<div class = "container pagina">
+				<header>
+					<nav class="navbar navbar-expand-lg navbar-light bg-light">
+						<a class="navbar-brand" href="#">Mochilas RiMo</a>
 
-			</footer>
-			<p>Hola</p>
-		</div>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
 
+						<div class="collapse navbar-collapse justify-content-end" id="navbar">
+							<ul class="navbar-nav mr-auto">
+								<li class="nav-item active">
+									<a class="nav-link" href="#">Inicio <span class="sr-only">(current)</span></a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">Mochilas</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="#">Autenticarse</a>
+								</li>
+							</ul>
+						</div>
+					</nav>
+				</header>
+				<main>
+
+				</main>
+				<footer>
+
+				</footer>
+			</div>
       	</body>
-	<footer>
-		Visita nuestras redes sociales</br>
-		
-		P&aacutegina realizada por:  </br>Ricardo Hern&aacutendez  </br>Karen Padilla
-	</footer>
-
+		<script src="/js/jquery-3.3.1.js"></script>
+		<script src="/js/bootstrap.js"></script>
 </html>
 
