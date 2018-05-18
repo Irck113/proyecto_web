@@ -22,7 +22,12 @@
 			<label>Correo:</label> <input type="text" correo="correo" required> <br>
 			<label>Usuario:</label><input type="text" usuario="Usuario"> <br>
 			<label>Contrasena:</label><input type="text" contrasena="Contraseña"> <br>
-		<input type="submit">
+			Tipo de Usuario<br>
+			<input type="radio" name="tipo_usuario" value="Cliente">Cliente</input>
+			<?php if (isset($tipo_usuario) && $tipo_usuario=="Cliente") echo "Registrado como cliente";?>
+			<input type="radio" name="tipo_usuario" value="Ventas">Ventas</input>
+			<?php if (isset($tipo_usuario) && $tipo_usuario=="Ventas") echo "Registrado como ventas";?><br><br>
+		<input type="submit" name="enviar" value="Enviar información">
 		</form>
         </body>
 </html>
