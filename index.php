@@ -24,11 +24,16 @@
 									<a class="nav-link" href="#">Carrito</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">Mochilas</a>
+									<a class="nav-link" href="mochilas.php">Mochilas</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="autenticar.php">Autenticarse</a>
 								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="altaUsuarios.php">Registrate</a>
+								<form action="autenticar2.php" method="post">
+							        </li>
+
 							</ul>
 						</div>
 					</nav>

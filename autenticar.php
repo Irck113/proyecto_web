@@ -1,32 +1,24 @@
-<!DOCTYPE html>
-<html>
-<head>
-        <meta charset="UTF-8">
-        <title>Autenticar</title>
-</head>
-<body>
 <?php
-        include_once(conexion.php);
-        //var_dump($_POST);
-
-        //RECIBIR POST
-        $user = $_POST['usuario'];
-        $password = $_POST['contrasena'];
-
-        //VALIDAR
-        $user = filter_var("$user", FILTER_SANITIZE_STRING);
-        $password = md5($password);
-      //CONSULTA
-        //$consulta ="SELECT password FROM usuarios WHERE user_name='$user';";
-        //$valconsulta = consulta($consulta);
-        //var_dump ($valconsulta);
-
-        //INSERT
-        $insert = "INSERT into usuarios (usuario, contrasena) values ('$user','$password');
-        $guarda_ins = consulta("$insert");
-        var_dump($insert);
-
+session_start();
+$_SESSION['pag']=1;
 ?>
-</body>
-</html>
 
+<p>Autentícate</p>
+<br />
+
+<form action="autenticar2.php" method="post">
+
+<label>Usuario:</label>
+<br />
+<input type="text" name="usuario" id="usuario">
+<br />
+
+<label>Contraseña:</label>
+<br />
+<input type="password" name="contrasena" id="contrasena">
+<br />
+<br />
+
+<input type="submit" name"entrar" value="Entrar">
+
+</form>
