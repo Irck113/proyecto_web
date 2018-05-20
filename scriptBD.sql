@@ -51,6 +51,7 @@ CREATE TABLE mochilas
 	tamano		CHAR(1)		NOT NULL,
 	precio		FLOAT		NOT NULL,
 	existencia	BOOLEAN		NOT NULL,
+	imagen		VARCHAR(20)	NOT NULL,
 	FOREIGN KEY(id_marca) references marca(id_marca),
 	FOREIGN KEY(id_oferta) references oferta(id_oferta)
 );
