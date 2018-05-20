@@ -24,7 +24,7 @@
 									<a class="nav-link" href="#">Carrito</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="#">Mochilas</a>
+									<a class="nav-link" href="mochilas.php">Mochilas</a>
 								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="autenticar.php">Autenticarse</a>
