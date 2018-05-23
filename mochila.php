@@ -1,18 +1,6 @@
 <!DOCTYPE html>
 
 <html>
-<<<<<<< HEAD
-        <head>
-                <meta charset = "utf-8"/>
-                                <meta name = "viewport" content = "width=device-width"/>
-                                <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
-                                <link rel = "stylesheet" href = "css/bootstrap.css"/>
-                                <link rel = "stylesheet" href = "css/main.css"/>
-        </head>
-	<body>
-
-	</body>
-=======
     <head>
         <meta charset = "utf-8"/>
         <meta name = "viewport" content = "width=device-width"/>
@@ -24,7 +12,7 @@
         <div class = "container pagina">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="#">Mochilas RiMo</a>
+                    <a class="navbar-brand" href="index.php">Mochilas RiMo</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -69,5 +57,4 @@
         <script src="js/bootstrap.js"></script>
     </body>
 </html>
->>>>>>> 5afd0c2059317ede00faafed5887b036179987b9
 

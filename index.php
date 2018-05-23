@@ -30,7 +30,7 @@
 									<a class="nav-link" href="autenticar.php">Autenticarse</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link" href="altaUsuarios.php">Registrate</a>
+									<a class="nav-link" href="registrarUsuario.php">Registrate</a>
 								<form action="autenticar2.php" method="post">
 							        </li>
 

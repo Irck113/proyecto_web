@@ -12,7 +12,7 @@
         <div class = "container pagina">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light">
-                    <a class="navbar-brand" href="#">Mochilas RiMo</a>
+                    <a class="navbar-brand" href="index.php">Mochilas RiMo</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>

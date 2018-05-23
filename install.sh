@@ -11,7 +11,7 @@ chmod 664 /etc/ssl/certs/proyecto_web.crt
 chmod 640 /etc/ssl/private/proyecto_web.key
 
 #Copiar los virtualhost a las carpetas de apache
-sed -i '127.0.0.1	www.mochilasRiMo.com.mx' /etc/hosts
+sed -i '127.0.0.1	www.mochilasrimo.com.mx' /etc/hosts
 
 cd archivosConfiguracion
 
@@ -22,10 +22,10 @@ mv proyecto_web_ssl.conf /etc/apache2/sites-available
 a2ensite proyecto_web.conf
 a2ensite proyecto_web_ssl.conf
 
+a2enmod ssl
+
 systemctl reload apache2
 systemctl restart apache2
-
-a2enmod ssl
 
 #Instalar la base de datos
 
