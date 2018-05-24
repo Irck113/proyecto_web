@@ -33,7 +33,23 @@
                 </nav>
             </header>
             <main>
-
+                <div class="row">
+                    <?php
+                        $mochila = $_GET["mochila"];
+                        include 'model/conexion.php';
+                        $con = conectar();
+                        $query=("SELECT * FROM mochilas WHERE id_mochila = $mochila");
+                        $res=pg_query($con,$query);
+                        while ($f=pg_fetch_array($res)) {
+                        ?>
+                            <div class="col-3">
+                                <img class="imagenMochila" src="img/<?php echo $f['imagen'];?>"/><br>
+                                <a href="mochila.php?mochila=<?php echo $f['id_mochila']?>"><?php echo $f['nombre'];?></a><br>
+                            </div>
+                    <?php
+                        }
+                    ?>
+                </div>
             </main>
             <footer>
                 <div class="row">

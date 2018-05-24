@@ -33,18 +33,28 @@
                 </nav>
             </header>
             <main>
-            <?php
-                include 'conexion.php';
-                $re=psql_query("select * from mochilas")or die(psql_error());
-                while ($f=psql_fetch_array($re)) {
+                <div class="row">
+                <?php
+                    include 'model/conexion.php';
+                    $con = conectar();
+                    $query=("SELECT * FROM mochilas");
+                    $res=pg_query($con,$query);
+                    while ($f=pg_fetch_array($res)) {
+                    ?>
+                        <div class="productoMochila col-4">
+                            <div class="card">
+                              <img class="card-img-top" src="img/<?php echo $f['imagen'];?>" alt=""/>
+                              <div class="card-body">
+                                <h5 class="card-title"><?php echo $f['nombre']?></h5>
+                                <p class="card-text"></p>
+                                <a href="mochila.php?mochila=<?php echo $f['id_mochila']?>" class="btn btn-primary">Detalles</a>
+                              </div>
+                            </div>
+                        </div>
+                <?php
+                    }
                 ?>
-                    <div class="producto">
-                        <img src="img/<?php echo $f['imagen'];?>"><br>
-                        <span><?php echo $f['nombre'];?></span><br>
-                    </div>
-            <?php
-                }
-            ?>
+                </div>
             </main>
             <footer>
                 <div class="row">

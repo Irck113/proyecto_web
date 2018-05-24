@@ -23,7 +23,7 @@
 								<a class="nav-link" href="#">Carrito</a>
 							</li>
 							<li class="nav-item">
-								<a class="nav-link" href="#">Mochilas</a>
+								<a class="nav-link" href="mochilas.php">Mochilas</a>
 							</li>
 							<li class="nav-item">
 								<a class="nav-link" href="autenticar.php">Autenticarse</a>
@@ -76,6 +76,7 @@
 							<small class="form-text text-muted">Longitud minima de 8 caracteres, debe incluir al menos un digito y una letra mayuscula</small>
 						</div>
 					</div>
+					<!--
 					<div class="form-check col-6">
 						<input class="form-check-input" type="radio" name="tipoUsuario" id="uVentas" value="2" checked>
 						<label class="form-check-label" for="uVentas">
@@ -88,6 +89,7 @@
 						Usuario administrador
 						</label>
 					</div>
+					-->
 					<button type="submit" class="btn btn-primary" name="enviar">Enviar</button>
 				</form>
 			</main>
