@@ -13,7 +13,7 @@ $tipoUsuario = $_POST['tipoUsuario'];
 
 if(!empty($nombre)||!empty($aPaterno)||!empty($direccion)||!empty($telefono)||!empty($correo)||!empty($usuario)||!empty($contrasena)||!empty($tipoUsuario)){
         $usuario = "insert into usuarios (nombre,ap_paterno,ap_materno,direccion,telefono,correo,usuario,contrasena,id_tipo_usuario) values('$nombre', '$aPaterno', '$aMaterno', '$direccion', '$telefono', '$correo', '$usuario', '$contrasena', '$tipoUsuario')";
-        $guarda_usuario = consulta($usuario);
+        $guarda_usuario = aConsulta($usuario);
         if($guarda_usuario == false){
                	echo "Gracias por ingresar tus datos";
         } else {
