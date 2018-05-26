@@ -19,11 +19,11 @@
                     <div class="col-7"></div>
                     <div class="collapse navbar-collapse justify-content-end" id="navbar">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
+                            <li class="nav-item">
                                 <a class="nav-link" href="#">Carrito</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Mochilas</a>
+                                <a class="nav-link active" href="#">Mochilas</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="autenticar.php">Autenticarse</a>

@@ -1,3 +1,8 @@
+<?php 
+	session_start();
+	$tipo_usuario = $_SESSION['tipo_usuario'];
+?>
+
 <!DOCTYPE html>
 
 <html>
@@ -20,20 +25,35 @@
 						<div class="col-7"></div>
 						<div class="collapse navbar-collapse justify-content-end" id="navbar">
 							<ul class="navbar-nav mr-auto">
-								<li class="nav-item active">
-									<a class="nav-link" href="#">Carrito</a>
-								</li>
 								<li class="nav-item">
 									<a class="nav-link" href="mochilas.php">Mochilas</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="autenticar.php">Autenticarse</a>
-								</li>
-								<li class="nav-item">
-									<a class="nav-link" href="registrarUsuario.php">Registrate</a>
-								<form action="autenticar2.php" method="post">
-							        </li>
-
+								<?php 
+									if($tipo_usuario == 'C'){
+										echo '<li class="nav-item">
+												<a class="nav-link" href="#">Carrito</a>
+											</li>
+										';
+									} else if($tipo_usuario == 'A'){
+										echo '<li class="nav-item">
+												<a class="nav-link" href="administracion.php">Usuarios</a>
+											</li>
+										';
+									} else if($tipo_usuario == 'V'){
+										echo '<li class="nav-item">
+												<a class="nav-link" href="gestionarMochilas.php">Gestionar Articulos</a>
+											</li>
+										';
+									} else if($tipo_usuario == '' || $tipo_usuario == null){
+										echo '<li class="nav-item">
+												<a class="nav-link" href="autenticar.php">Autenticarse</a>
+											</li>
+											<li class="nav-item">
+												<a class="nav-link" href="registrarUsuario.php">Registrate</a>
+											</li>
+										';
+									}
+								?>
 							</ul>
 						</div>
 					</nav>
@@ -87,6 +107,5 @@
 			<script src="js/jquery-3.1.1.js"></script>
 			<script src="js/bootstrap.js"></script>
       	</body>
-
 </html>
 
