@@ -1,5 +1,5 @@
 CREATE USER administrador with encrypted password '12Admin34';
-CREATE USER vendedor with encrypted password '';
+CREATE USER vendedor with encrypted password '$contrasena';
 CREATE USER cliente with encrypted password '$contrasena';
 
 CREATE DATABASE proyecto_web OWNER administrador;
@@ -18,34 +18,48 @@ CREATE TABLE usuarios
 	nombre			VARCHAR(35)		NOT NULL,
 	ap_paterno		VARCHAR(35)		NOT NULL,
 	ap_materno		VARCHAR(35),
-	direccion		VARCHAR(50)		NOT NULL,
 	telefono		VARCHAR(10)		NOT NULL,
 	correo 			VARCHAR(30)		NOT NULL,
 	usuario			VARCHAR(15)		NOT NULL,
 	contrasena		VARCHAR(30)		NOT NULL,
-	id_tipo_usuario	serial			NOT NULL,
+	id_tipo_usuario		serial			NOT NULL,
 
-	FOREIGN KEY(id_tipo_usuario) references tipo_usuarios(id_tipo_usuario)
+	FOREIGN KEY(id_tipo_usuario) references tipo_usuarios(id_tipo_usuario),
+	UNIQUE (usuario)
 );
 
 CREATE TABLE marcas
 (
-        id_marca    serial          PRIMARY KEY,
-        nombre    	VARCHAR(30)     NOT NULL
+        id_marca    	serial          PRIMARY KEY,
+        nombre_marca    VARCHAR(30)     NOT NULL
+);
+
+CREATE TABLE oferta
+(
+	id_oferta	serial		PRIMARY KEY,
+	nombre 		VARCHAR(30)	NOT NULL,
+	descuento	INT		NOT NULL,
+	fecha_inicio	DATE		NOT NULL,
+	fecha_fin	DATE		NOT NULL,
+	id_marca	serial		NOT NULL,
+	
+	FOREIGN KEY(id_marca) references marca(id_marca)
 );
 
 CREATE TABLE mochilas
 (
 	id_mochila	serial			PRIMARY KEY,
 	nombre		VARCHAR(35)		NOT NULL,
-	descuento	FLOAT	 		NOT NULL,
+	descripcion	VARCHAR(30)		NOT NULL,
 	tamano		CHAR(1)			NOT NULL,
 	precio		FLOAT			NOT NULL,
-	existencia	BOOLEAN			NOT NULL,
-	imagen		VARCHAR(100)	NOT NULL,
+	cantidad	INT			NOT NULL,
+	imagen		VARCHAR(100)		NOT NULL,
 	id_marca	serial			NOT NULL,
+	id_oferta	serial			NOT NULL,
 
-	FOREIGN KEY(id_marca) references marcas(id_marca)
+	FOREIGN KEY(id_marca) references marcas(id_marca),
+	FOREIGN KEY(id_oferta) references oferta(id_oferta)
 );
 
 CREATE TABLE formas_pago
