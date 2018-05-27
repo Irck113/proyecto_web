@@ -1,6 +1,10 @@
 <?php
 	session_start();
 	$tipo_usuario = $_SESSION['tipo_usuario'];
+
+	if($tipo_usuario == 'V'){
+		header('Location:../index.php');
+	}
 ?>
 <!DOCTYPE html>
 
@@ -8,7 +12,7 @@
 	<head>
 		<meta charset = "utf-8"/>
 		<meta name = "viewport" content = "width=device-width"/>
-		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+		<link rel = "stylesheet" href = "https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
 		<link rel = "stylesheet" href = "../css/bootstrap.css"/>
 		<link rel = "stylesheet" href = "../css/main.css"/>
 	</head>
@@ -23,56 +27,56 @@
 					<div class="col-7"></div>
 					<div class="collapse navbar-collapse justify-content-end" id="navbar">
 						<ul class="navbar-nav mr-auto">
-								<li class="nav-item">
-									<a class="nav-link" href="mochilas.php">Mochilas</a>
-								</li>
-								<?php 
-									switch($tipo_usuario){
-										case 1: echo '<li class="nav-item">
-														<a class="nav-link" href="#">Carrito</a>
-													</li>
-													<li class="nav-item dropdown">
-												        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												          Cuenta
-												        </a>
-												        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-												          <a class="dropdown-item" href="#">Mis datos</a>
-												          <a class="dropdown-item" href="compras.php">Mis compras</a>
-												          <a class="dropdown-item" href="../control/cerrarSesion.php">Cerrar sesi&oacute;n</a>
-												        </div>
-												    </li>
-												';
+							<li class="nav-item">
+								<a class="nav-link" href="mochilas.php">Mochilas</a>
+							</li>
+							<?php 
+								switch($tipo_usuario){
+									case 'C': echo '<li class="nav-item">
+													<a class="nav-link" href="#">Carrito</a>
+												</li>
+												<li class="nav-item dropdown">
+													<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+														Cuenta
+													</a>
+													<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+														<a class="dropdown-item" href="#">Mis datos</a>
+														<a class="dropdown-item" href="compras.php">Mis compras</a>
+														<a class="dropdown-item" href="../control/cerrarSesion.php">Cerrar sesi&oacute;n</a>
+													</div>
+												</li>
+											';
+											break;
+									case 'A': echo '<li class="nav-item">
+													<a class="nav-link" href="administracion.php">Usuarios</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" href="gestionarMarcas.php">Marcas</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" href="../control/cerrarSesion.php">Cerrar Sesion</a>
+												</li>
+											';
+											break;
+									case 'V': echo '<li class="nav-item">
+													<a class="nav-link" href="gestionarMochilas.php">Gestionar Articulos</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" href="../control/cerrarSesion.php">Cerrar Sesion</a>
+												</li>
+											';
+											break;
+									default: echo '<li class="nav-item">
+													<a class="nav-link" href="iniciarSesion.php">Autenticarse</a>
+												</li>
+												<li class="nav-item">
+													<a class="nav-link" href="registrarUsuario.php">Registrate</a>
+												</li>
+											';
 												break;
-										case 2: echo '<li class="nav-item">
-														<a class="nav-link" href="administracion.php">Usuarios</a>
-													</li>
-													<li class="nav-item">
-														<a class="nav-link" href="gestionarMarcas.php">Marcas</a>
-													</li>
-													<li class="nav-item">
-														<a class="nav-link" href="../control/cerrarSesion.php">Cerrar Sesion</a>
-													</li>
-												';
-												break;
-										case 3: echo '<li class="nav-item">
-														<a class="nav-link" href="gestionarMochilas.php">Gestionar Articulos</a>
-													</li>
-													<li class="nav-item">
-														<a class="nav-link" href="../control/cerrarSesion.php">Cerrar Sesion</a>
-													</li>
-												';
-												break;
-										default: echo '<li class="nav-item">
-														<a class="nav-link" href="iniciarSesion.php">Autenticarse</a>
-													</li>
-													<li class="nav-item">
-														<a class="nav-link" href="registrarUsuario.php">Registrate</a>
-													</li>
-												';
-												 break;
-									}
-								?>
-							</ul>
+								}
+							?>
+						</ul>
 					</div>
 				</nav>
 			</header>
@@ -120,18 +124,36 @@
 							<small class="form-text text-muted">Longitud minima de 8 caracteres, debe incluir al menos un digito y una letra mayuscula</small>
 						</div>
 					</div>
-					<div class="form-check col-6">
-						<input class="form-check-input" type="radio" name="tipoUsuario" id="uVentas" value="2" checked>
-						<label class="form-check-label" for="uVentas">
-						Usuario de ventas
-						</label>
-					</div>
-					<div class="form-check">
-						<input class="form-check-input" type="radio" name="tipoUsuario" id="uAdministrador" value="1">
-						<label class="form-check-label" for="uAdministrador">
-						Usuario administrador
-						</label>
-					</div>
+					<?php
+						switch($tipo_usuario){
+							case 'A': 	echo '<div class="form-check">
+												<input class="form-check-input" type="radio" name="tipoUsuario" id="uAdministrador" value="1">
+												<label class="form-check-label" for="uAdministrador">
+												Usuario administrador
+												</label>
+											</div>
+											<div class="form-check col-6">
+												<input class="form-check-input" type="radio" name="tipoUsuario" id="uVentas" value="2">
+												<label class="form-check-label" for="uVentas">
+												Usuario de ventas
+												</label>
+											</div>
+											<div class="form-check col-6">
+												<input class="form-check-input" type="radio" name="tipoUsuario" id="uCliente" value="3" checked>
+												<label class="form-check-label" for="uCliente">
+												Usuario cliente
+												</label>
+											</div>
+										';
+										break;
+
+							case 'V':	header('Location:../index.php');
+										break;
+							default: 	echo '<input value="3" name="tipoUsuario" style="dysplay:none;">';
+										break;
+						}
+					?>
+					
 					<button type="submit" class="btn btn-primary" name="enviar">Enviar</button>
 				</form>
 			</main>

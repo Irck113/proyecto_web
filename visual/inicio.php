@@ -30,22 +30,22 @@
 								</li>
 								<?php 
 									switch($tipo_usuario){
-										case 1: echo '<li class="nav-item">
+										case 'C': echo '<li class="nav-item">
 														<a class="nav-link" href="#">Carrito</a>
 													</li>
 													<li class="nav-item dropdown">
-												        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-												          Cuenta
-												        </a>
-												        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-												          <a class="dropdown-item" href="#">Mis datos</a>
-												          <a class="dropdown-item" href="compras.php">Mis compras</a>
-												          <a class="dropdown-item" href="../control/cerrarSesion.php">Cerrar sesi&oacute;n</a>
-												        </div>
-												    </li>
+														<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+															Cuenta
+														</a>
+														<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+															<a class="dropdown-item" href="#">Mis datos</a>
+															<a class="dropdown-item" href="compras.php">Mis compras</a>
+															<a class="dropdown-item" href="../control/cerrarSesion.php">Cerrar sesi&oacute;n</a>
+														</div>
+													</li>
 												';
 												break;
-										case 2: echo '<li class="nav-item">
+										case 'A': echo '<li class="nav-item">
 														<a class="nav-link" href="administracion.php">Usuarios</a>
 													</li>
 													<li class="nav-item">
@@ -56,7 +56,7 @@
 													</li>
 												';
 												break;
-										case 3: echo '<li class="nav-item">
+										case 'V': echo '<li class="nav-item">
 														<a class="nav-link" href="gestionarMochilas.php">Gestionar Articulos</a>
 													</li>
 													<li class="nav-item">
@@ -71,7 +71,7 @@
 														<a class="nav-link" href="registrarUsuario.php">Registrate</a>
 													</li>
 												';
-												 break;
+													break;
 									}
 								?>
 							</ul>

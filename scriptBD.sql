@@ -2,7 +2,7 @@ CREATE USER administrador with encrypted password '12Admin34';
 CREATE USER vendedor with encrypted password '';
 CREATE USER cliente with encrypted password '$contrasena';
 
-CREATE DATABASE proyecto_web OWNER super_admin;
+CREATE DATABASE proyecto_web OWNER administrador;
 
 \c proyecto_web;
 
@@ -83,7 +83,14 @@ CREATE TABLE mochilasXventas
 );
 
 /***********************PERSMISOS ADMINISTRADOR*************************/
-GRANT ALL PRIVILEGES ON * . * TO administrador;
+GRANT ALL PRIVILEGES ON tipo_usuarios TO administrador;
+GRANT ALL PRIVILEGES ON usuarios TO administrador;
+GRANT ALL PRIVILEGES ON marcas TO administrador;
+GRANT ALL PRIVILEGES ON mochilas TO administrador;
+GRANT ALL PRIVILEGES ON formas_pago TO administrador;
+GRANT ALL PRIVILEGES ON tipo_envio TO administrador;
+GRANT ALL PRIVILEGES ON ventas TO administrador;
+GRANT ALL PRIVILEGES ON mochilasXventas TO administrador;
 
 /***********************PERSMISOS VENDEDOR*************************/
 GRANT insert ON ventas TO vendedor;
