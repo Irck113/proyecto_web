@@ -1,3 +1,9 @@
+<?php
+    session_start();
+    $tipo_usuario = $_SESSION['tipo_usuario'];
+
+    $mochila = $_GET['mochila'];
+?>
 <!DOCTYPE html>
 
 <html>
@@ -25,7 +31,7 @@
 							<?php 
 								switch($tipo_usuario){
 									case 'C': echo '<li class="nav-item">
-													<a class="nav-link" href="#">Carrito</a>
+													<a class="nav-link" href="carrito.php">Carrito</a>
 												</li>
 												<li class="nav-item dropdown">
 													<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +46,7 @@
 											';
 											break;
 									case 'A': echo '<li class="nav-item">
-													<a class="nav-link" href="administracion.php">Usuarios</a>
+													<a class="nav-link" href="gestionarUsuarios.php">Usuarios</a>
 												</li>
 												<li class="nav-item">
 													<a class="nav-link" href="gestionarMarcas.php">Marcas</a>
@@ -75,16 +81,68 @@
             <main>
                 <div class="row">
                     <?php
-                        $mochila = $_GET["mochila"];
                         include '../model/conexion.php';
-                        $con = conectar();
+                        $con = cConectar();
                         $query=("SELECT * FROM mochilas WHERE id_mochila = $mochila");
                         $res=pg_query($con,$query);
                         while ($f=pg_fetch_array($res)) {
                         ?>
-                            <div class="col-3">
-                                <img class="imagenMochila" src="../img/<?php echo $f['imagen'];?>"/><br>
-                                <a href="mochila.php?mochila=<?php echo $f['id_mochila']?>"><?php echo $f['nombre'];?></a><br>
+                            <div class="col-6">
+                                <img class="imagenMochila" src="../img/<?php echo $f['imagen'];?>"/>
+                            </div>
+                            <div class="col-6">
+                                <div class="row">
+                                    <p>Nombre: <?php echo $f['nombre']?></p>
+                                </div>
+                                <div class="row">
+                                    <p>Marca: <?php 
+
+                                        $id_marca = $f['id_marca'];
+                                        $marca = ("SELECT nombre FROM marcas WHERE id_marca = $id_marca");
+
+                                        $guarda_marca = pg_query($con, $marca);
+                                        $m=pg_fetch_array($guarda_marca);
+                                        echo $m['nombre'];
+
+                                        ?>
+                                    </p>
+                                </div>
+                                <div class="row">
+                                    <p>Descripción: <?php echo $f['descripcion']?></p>
+                                </div>
+                                <div class="row">
+                                    <p>Tama&ntilde;o: <?php switch ($f['tamano']) {
+                                        case 'C': echo 'Chica';
+                                                  break;
+                                        case 'M': echo 'Mediana';
+                                                  break;
+
+                                        case 'G': echo 'Grande';
+                                                  break;
+                                        default:  break;
+                                    }?></p>
+                                </div>
+                                <div class="row">
+                                    <p>Precio original: $<?php echo $f['precio']?></p>
+                                </div>
+                                <div class="row">
+                                    <p>Ahora: $<?php echo (($f['precio'] - ($f['precio'] * $f['descuento'])))?></p>
+                                </div>
+                                <div class="row">
+                                    <p>Existencia: <?php if($f['cantidad'] <= 0){ 
+                                                            echo 'No';
+                                                         }else{ 
+                                                            echo 'Si';
+                                                         }?>
+                                    </p>
+                                </div>
+                                <?php
+                                    if(isset($_SESSION['tipo_usuario'])){
+                                ?>
+                                        <a href="carrito.php?mochila=<?php echo $f['id_mochila'];?>">Añadir al carrito de compras</a>
+                                <?php
+                                    }
+                                ?>
                             </div>
                     <?php
                         }
@@ -111,6 +169,7 @@
         </div>
         <script src="../js/jquery-3.1.1.js"></script>
         <script src="../js/bootstrap.js"></script>
+
     </body>
 </html>
 

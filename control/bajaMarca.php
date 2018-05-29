@@ -4,6 +4,10 @@
 	$id_marca=$_GET["marca"];
 
 	if(!empty($id_marca)){
+
+		$marcaMochila="UPDATE mochilas SET id_marca = 6 WHERE id_marca = '$id_marca'";
+		aConsulta($marcaMochila);
+
 		$marca="DELETE FROM marcas WHERE id_marca=$id_marca";
 		aConsulta($marca);
 

@@ -1,3 +1,84 @@
+<?php
+    session_start();
+    $tipo_usuario = $_SESSION['tipo_usuario'];
+    $id_usuario = $_SESSION['id_usuario'];
+    if($tipo_usuario == 'V'){
+    	header("Location:../index.php");
+    } else {
+    	$mochila = $_GET['mochila'];
+
+		include '../model/conexion.php';
+		$con = cConectar();
+	                        
+		if(isset($_SESSION['carrito'])){
+			if(isset($_GET['mochila'])){
+				$arreglo=$_SESSION['carrito'];
+				$encontro=false;
+				$numero=0;
+				for($i=0;$i<count($arreglo);$i++){
+					if($arreglo[$i]['Mochila']==$_GET['mochila']){
+						$encontro=true;
+						$numero=$i;
+					}
+				}
+				if($encontro){
+					$arreglo[$numero]['Cantidad']=$arreglo[$numero]['Cantidad']+1;
+					$_SESSION['carrito']=$arreglo;
+				}else{
+					$nombre="";
+					$precio=0;
+					$descuento=0;
+					$precioFinal=0;
+					$imagen="";
+					$query=("SELECT id_mochila, nombre, precio, descuento, imagen FROM mochilas WHERE id_mochila=".$_GET['mochila']);
+					$re=pg_query($con,$query);
+
+					while ($f=pg_fetch_array($re)) {
+						$nombre=$f['nombre'];
+						$precio=$f['precio'];
+						$descuento=$f['descuento'];
+						$precioFinal=$precio - ($precio * $descuento);
+						$imagen=$f['imagen'];
+					}
+					$datosNuevos=array('Mochila'=>$_GET['mochila'],
+									'Nombre'=>$nombre,
+									'Precio'=>$precioFinal,
+									'Imagen'=>$imagen,
+									'Cantidad'=>1);
+
+					array_push($arreglo, $datosNuevos);
+					$_SESSION['carrito']=$arreglo;
+
+				}
+			}
+
+		}else{
+			if(isset($_GET['mochila'])){
+					$nombre="";
+					$precio=0;
+					$descuento=0;
+					$precioFinal=0;
+					$imagen="";
+
+					$query=("SELECT id_mochila, nombre, precio, descuento, imagen FROM mochilas WHERE id_mochila=".$_GET['mochila']);
+					$re=pg_query($con,$query);
+				while ($f=pg_fetch_array($re)) {
+					$nombre=$f['nombre'];
+					$precio=$f['precio'];
+					$descuento=$f['descuento'];
+					$precioFinal=$precio - ($precio * $descuento);
+					$imagen=$f['imagen'];
+				}
+				$arreglo[]=array('Mochila'=>$_GET['mochila'],
+								'Nombre'=>$nombre,
+								'Precio'=>$precioFinal,
+								'Imagen'=>$imagen,
+								'Cantidad'=>1);
+				$_SESSION['carrito']=$arreglo;
+			}
+		}
+    }
+?>
 <!DOCTYPE html>
 
 <html>
@@ -25,7 +106,7 @@
 							<?php 
 								switch($tipo_usuario){
 									case 'C': echo '<li class="nav-item">
-													<a class="nav-link" href="#">Carrito</a>
+													<a class="nav-link" href="carrito.php">Carrito</a>
 												</li>
 												<li class="nav-item dropdown">
 													<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -40,7 +121,7 @@
 											';
 											break;
 									case 'A': echo '<li class="nav-item">
-													<a class="nav-link" href="administracion.php">Usuarios</a>
+													<a class="nav-link" href="gestionarUsuarios.php">Usuarios</a>
 												</li>
 												<li class="nav-item">
 													<a class="nav-link" href="gestionarMarcas.php">Marcas</a>
@@ -73,79 +154,39 @@
                 </nav>
             </header>
             <main>
-                <form class="needs-validation" method="post" action="../control/altaMochilas.php">
-                    <div class="form-row">
-                        <div class="form-group col-4">
-                            <label for="nombre">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre de la mochila" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="id_marca">Marca</label>
-                            <select class="form-control" id="id_marca" name="id_marca">
+            	<div class="row">
+            	<?php
+					$total=0;
+					if(isset($_SESSION['carrito'])){
+					$datos=$_SESSION['carrito'];
+					
+					$total=0;
+					for($i=0;$i<count($datos);$i++){
+							
+				?>
+					<div class="productoMochila col-3">
+						<div class="card">
+						<img class = "card-img-top" src="../img/<?php echo $datos[$i]['Imagen'];?>"><br>
+						<div class = "card-body">
+							<span><?php echo $datos[$i]['Nombre'];?></span><br>
+							<span>Precio: <?php echo $datos[$i]['Precio'];?></span><br>
+							<span>Cantidad: <input type="text" value="<?php echo $datos[$i]['Cantidad'];?>"></span><br>
+							<span>Subtotal:<?php echo $datos[$i]['Cantidad']*$datos[$i]['Precio'];?></span><br>
+						</div>
+					</div>
+					</div>
+					
+				<?php
+						$total=($datos[$i]['Cantidad']*$datos[$i]['Precio'])+$total;
+					}
+						echo '</div>';
+					}else{
+						echo '<center><h2>No has añadido ningun producto</h2></center>';
+					}
+					echo '<center><h2>Total: '.$total.'</h2></center>';
+				?>
 
-                        <?php
-                            include '../model/conexion.php';
-
-                            $con = conectar();
-
-                            $marca = ("SELECT id_marca,nombre_marca FROM marcas");
-
-                            $guarda_marca = pg_query($con, $marca);
-
-                            if(!$guarda_marca){
-                                echo '<option readonly>No hay marcas registradas</option>';
-                            } else {
-                                while ($row = pg_fetch_row($guarda_marca)){
-                                    echo '<option value="'.$row[0].'">'.$row[1].'</option>';
-                                }
-                            }
-                        ?>
-
-                            </select>
-                        </div>
-                        <div class="form-group col-4">
-                            <label for="descuento">Descuento</label>
-                            <input type="number" class="form-control" id="descuento" name="descuento" max="1" min="0" step="0.01" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tamano">Tama&ntilde;o</label>
-                            <select class="form-control" id="tamano" name="tamano">
-                                <option value="G">Grande</option>
-                                <option value="M">Mediana</option>
-                                <option value="C">Chica</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group col-10">
-                            <label for="precio">Precio</label>
-                            <input type="text" class="form-control" id="precio" name="precio" placeholder="$100.00" required>
-                        </div>
-                        <div class="form-group col-2">
-                            <label for="existencia">Existencia</label>
-                            <div class="form-check col-6">
-                                <input class="form-check-input" type="radio" name="existencia" id="eSi" value="true" checked>
-                                <label class="form-check-label" for="eSi">
-                                Si
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="existencia" id="eNo" value="false">
-                                <label class="form-check-label" for="eNo">
-                                No
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="imagen">Imagen</label>
-                            <input type="file" class="form-control-file" id="imagen" name="imagen">
-                        </div>
-                    </div>
-                    
-                    <button type="submit" class="btn btn-primary" name="enviar">Enviar</button>
-                </form>
+				<a href="comprar.php">Proceder con la compra de las mochilas</a>
             </main>
             <footer>
                 <div class="row">
@@ -167,5 +208,6 @@
         </div>
         <script src="../js/jquery-3.1.1.js"></script>
         <script src="../js/bootstrap.js"></script>
+
     </body>
 </html>

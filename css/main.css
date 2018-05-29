@@ -43,3 +43,15 @@ i.fab:hover{
 h2{
     text-align: center;
 }
+.imagenConsulta{
+    width: 75px;
+    height: 75px;
+}
+.imagenMochila{
+    width: 400px;
+    height: 400px;
+}
+.invisible{
+    display: none;
+    color: transparent;
+}

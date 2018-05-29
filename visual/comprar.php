@@ -1,7 +1,14 @@
 <?php
     session_start();
     $tipo_usuario = $_SESSION['tipo_usuario'];
+    $id_usuario = $_SESSION['id_usuario'];
+    if($tipo_usuario == 'V'){
+    	header("Location:../index.php");
+    } else {
+    	$arreglo=$_SESSION['carrito'];
+    }
 ?>
+
 <!DOCTYPE html>
 
 <html>
@@ -69,7 +76,7 @@
 													<a class="nav-link" href="registrarUsuario.php">Registrate</a>
 												</li>
 											';
-											break;
+												break;
 								}
 							?>
 						</ul>
@@ -77,29 +84,80 @@
                 </nav>
             </header>
             <main>
-                <div class="row">
-                <?php
-                    include '../model/conexion.php';
-                    $con = aConectar();
-                    $query=("SELECT imagen,nombre,id_mochila FROM mochilas");
-                    $res=pg_query($con,$query);
-                    while ($f=pg_fetch_array($res)) {
-                    ?>
-                        <div class="productoMochila col-4">
-                            <div class="card">
-                              <img class="card-img-top" src="../img/<?php echo $f['imagen'];?>" alt=""/>
-                              <div class="card-body">
-                                <h5 class="card-title"><?php echo $f['nombre']?></h5>
-                                <p class="card-text"></p>
-                                <a href="mochila.php?mochila=<?php echo $f['id_mochila']?>" class="btn btn-primary">Detalles</a>
-                              </div>
-                            </div>
-                        </div>
-                <?php
-                    }
-                ?>
-                </div>
-            </main>
+            	<div class = "row">
+            		<div class="col-6">
+            			<?php
+							$total=0;
+						if(isset($_SESSION['carrito'])){
+							$datos=$_SESSION['carrito'];
+							
+							$total=0;
+							for($i=0;$i<count($datos);$i++){
+							
+						?>
+							<div class="card">
+								<img class = "card-img-top" src="../img/<?php echo $datos[$i]['Imagen'];?>"><br>
+								<div class = "card-body">
+									<span><?php echo $datos[$i]['Nombre'];?></span><br>
+									<span>Precio: <?php echo $datos[$i]['Precio'];?></span><br>
+									<span>Cantidad: <input type="text" value="<?php echo $datos[$i]['Cantidad'];?>"></span><br>
+									<span>Subtotal:<?php echo $datos[$i]['Cantidad']*$datos[$i]['Precio'];?></span><br>
+								</div>
+							</div>
+								
+						<?php
+						$total=($datos[$i]['Cantidad']*$datos[$i]['Precio'])+$total;
+					}
+					}
+					
+				?>
+            		</div>
+					<div class = "col-6">
+                        <h2 id="titulo">Confirmar compra</h2>
+		                <form class="needs-validation" method="post" action="../control/altaVenta.php">
+		                	<div class="form-group">
+                                    <label for="precio_unitario">Precio total unitario</label>
+                                    <input type="text" class="form-control" id="precio_unitario" name="precio_unitario" placeholder="<?php echo $total; ?>" value="<?php echo $total; ?>" readonly required>
+                                </div>
+		                	<h3>Tipo de envio</h3>
+		                	<div class="form-check">
+								<input class="form-check-input" type="radio" name="tipo_envio" id="teExpres" value="1">
+								<label class="form-check-label" for="teExpres">
+								Exprés
+								</label>
+							</div>
+							<div class="form-check col-6">
+								<input class="form-check-input" type="radio" name="tipo_envio" id="teEstandar" value="2">
+								<label class="form-check-label" for="teEstandar">
+								Estándar
+								</label>
+							</div>
+
+							<h3>Forma de pago</h3>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="forma_pago" id="fpEfectivo" value="1">
+								<label class="form-check-label" for="fpEfectivo">
+								Pago en efectivo
+								</label>
+							</div>
+							<div class="form-check col-6">
+								<input class="form-check-input" type="radio" name="forma_pago" id="fpDebito" value="2">
+								<label class="form-check-label" for="fpDebito">
+								Tarjeta de débito
+								</label>
+							</div>
+							<div class="form-check col-6">
+								<input class="form-check-input" type="radio" name="forma_pago" id="fpCredito" value="3">
+								<label class="form-check-label" for="fpCredito">
+								Tarjeta de crédito
+								</label>
+							</div>
+							<input class="invisible" value="<?php echo $id_usuario; ?>" />
+							<button type="submit" class="btn btn-primary" name="enviar">Comprar</button>
+						</form>
+					</div>
+				</div>
+           	</main>
             <footer>
                 <div class="row">
                     <div class="col">
@@ -120,5 +178,6 @@
         </div>
         <script src="../js/jquery-3.1.1.js"></script>
         <script src="../js/bootstrap.js"></script>
+
     </body>
 </html>

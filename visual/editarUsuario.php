@@ -1,8 +1,18 @@
 <?php
 	session_start();
-	if(isset($_SESSION['tipo_usuario'])){
+	$tipo_usuario = $_SESSION['tipo_usuario'];
+
+	if(!$tipo_usuario == 'A'){
 		header('Location:../index.php');
 	}
+
+	$nombre = $_GET['nombre'];
+	$ap_paterno = $_GET['ap_paterno'];
+	$ap_materno = $_GET['ap_materno'];
+	$telefono = $_GET['telefono'];
+	$correo= $_GET['correo'];
+	$usuario = $_GET['usuario'];
+	$id_usuario = $_GET['id_usuario'];
 ?>
 <!DOCTYPE html>
 
@@ -79,51 +89,59 @@
 				</nav>
 			</header>
 			<main>
-				<form class="needs-validation" method="post" action="../control/altaUsuario.php">
+				<h2 id="titulo">Editar usuario</h2>
+				<form class="needs-validation" method="post" action="../control/modificarUsuario.php">
 					<div class="form-row">
 						<div class="form-group col-4">
 							<label for="nombre">Nombre</label>
-							<input type="text" class="form-control" id="nombre" name="nombre" placeholder="Andres Manuel" required>
+							<input type="text" class="form-control" id="nombre" name="nombre" value = "<?php echo $nombre; ?>"placeholder="<?php echo $nombre; ?>" required>
 						</div>
 						<div class="form-group col-4">
 							<label for="aPaterno">Apellido Paterno</label>
-							<input type="text" class="form-control" id="aPaterno" name="aPaterno" placeholder="Lopez" required>
+							<input type="text" class="form-control" id="aPaterno" name="aPaterno" value = "<?php echo $ap_paterno; ?>"placeholder="<?php echo $ap_paterno; ?>" required>
 						</div>
 						<div class="form-group col-4">
 							<label for="aMaterno">Apellido Materno</label>
-							<input type="text" class="form-control" id="aMaterno" name="aMaterno" placeholder="Obrador" required>
+							<input type="text" class="form-control" id="aMaterno" name="aMaterno" value = "<?php echo $ap_materno; ?>"placeholder="<?php echo $ap_materno; ?>" required>
 						</div>
 					</div>
 					<div class="form-row">
-						<div class="form-group col-10">
-							<label for="direccion ">Direccion</label>
-							<input type="text" class="form-control" id="direccion" name="direccion" placeholder="Direccion" required>
-							<small class="form-text text-muted">Calle, N&uacute;mero, Colonia, Entidad federativa, Delegacion o municipio</small>
-						</div>
 						<div class="form-group col-2">
 							<label for="telefono">Telefono</label>
-							<input type="text" class="form-control" id="telefono" name="telefono" placeholder="5566778899" size="10" maxlength="10" required>
+							<input type="text" class="form-control" id="telefono" name="telefono" value = "<?php echo $telefono; ?>"placeholder="<?php echo $telefono; ?>" size="10" maxlength="10" required>
 							<small class="form-text text-muted">10 digitos</small>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-4">
 							<label for="correo">Correo</label>
-							<input type="email" class="form-control" id="correo" name="correo" placeholder="ejemplo@dominio.com" required>
+							<input type="email" class="form-control" id="correo" name="correo" value = "<?php echo $correo; ?>"placeholder="<?php echo $correo; ?>" required>
 						</div>
 						<div class="form-group col-4">
 							<label for="usuario">Usuario</label>
-							<input type="text" class="form-control" id="usuario" name="usuario" placeholder="AMLO" required>
+							<input type="text" class="form-control" id="usuario" name="usuario" value = "<?php echo $usuario; ?>"placeholder="<?php echo $usuario; ?>" required>
 							<small class="form-text text-muted">Longitud minima de 6 caracteres</small>
 						</div>
-						<div class="form-group col-4">
-							<label for="contrasena">Contrase&ntilde;a</label>
-							<input type="password" class="form-control" id="contrasena" name="contrasena"  placeholder="Contrase&ntilde;a" required>
-							<small class="form-text text-muted">Longitud minima de 8 caracteres, debe incluir al menos un digito y una letra mayuscula</small>
-						</div>
 					</div>
-					
-					<input class="invisible" value="3" name="tipoUsuario"/>
+					<div class="form-check">
+						<input class="form-check-input" type="radio" name="tipoUsuario" id="uAdministrador" value="1">
+						<label class="form-check-label" for="uAdministrador">
+						Usuario administrador
+						</label>
+					</div>
+					<div class="form-check col-6">
+						<input class="form-check-input" type="radio" name="tipoUsuario" id="uVentas" value="2">
+						<label class="form-check-label" for="uVentas">
+						Usuario de ventas
+						</label>
+					</div>
+					<div class="form-check col-6">
+						<input class="form-check-input" type="radio" name="tipoUsuario" id="uCliente" value="3" checked>
+						<label class="form-check-label" for="uCliente">
+						Usuario cliente
+						</label>
+					</div>
+					<input class="invisible" name="id_usuario" value="<?php echo $id_usuario;?>"/>
 					<button type="submit" class="btn btn-primary" name="enviar">Enviar</button>
 				</form>
 			</main>
@@ -149,4 +167,3 @@
 		<script src="../js/bootstrap.js"></script>
 	</body>
 </html>
-

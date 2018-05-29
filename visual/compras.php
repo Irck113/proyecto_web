@@ -1,7 +1,12 @@
 <?php
     session_start();
     $tipo_usuario = $_SESSION['tipo_usuario'];
+    $id_usuario = $_SESSION['id_usuario'];
+    if($tipo_usuario == 'V'){
+    	header("Location:../index.php");
+    }
 ?>
+
 <!DOCTYPE html>
 
 <html>
@@ -69,7 +74,7 @@
 													<a class="nav-link" href="registrarUsuario.php">Registrate</a>
 												</li>
 											';
-											break;
+												break;
 								}
 							?>
 						</ul>
@@ -77,28 +82,20 @@
                 </nav>
             </header>
             <main>
-                <div class="row">
-                <?php
-                    include '../model/conexion.php';
-                    $con = aConectar();
-                    $query=("SELECT imagen,nombre,id_mochila FROM mochilas");
-                    $res=pg_query($con,$query);
-                    while ($f=pg_fetch_array($res)) {
-                    ?>
-                        <div class="productoMochila col-4">
-                            <div class="card">
-                              <img class="card-img-top" src="../img/<?php echo $f['imagen'];?>" alt=""/>
-                              <div class="card-body">
-                                <h5 class="card-title"><?php echo $f['nombre']?></h5>
-                                <p class="card-text"></p>
-                                <a href="mochila.php?mochila=<?php echo $f['id_mochila']?>" class="btn btn-primary">Detalles</a>
-                              </div>
-                            </div>
-                        </div>
-                <?php
-                    }
-                ?>
-                </div>
+            	<?php
+			  		include_once('../model/conexion.php');
+
+			  		$con = cConectar();
+            		$query=("SELECT fecha,precio_unitario FROM ventas");
+            		$res=pg_query($con,$query);
+
+            		while ($f=pg_fetch_array($res)) {
+            	?>
+            		<p><?php echo $f['fecha'];?></p>
+            		<p><?php echo $f['precio_unitario'];?></p>
+            	<?php
+            		}
+			  	?>
             </main>
             <footer>
                 <div class="row">
@@ -120,5 +117,6 @@
         </div>
         <script src="../js/jquery-3.1.1.js"></script>
         <script src="../js/bootstrap.js"></script>
+
     </body>
 </html>

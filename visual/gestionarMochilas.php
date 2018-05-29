@@ -2,7 +2,7 @@
 	session_start();
 	$tipo_usuario = $_SESSION['tipo_usuario'];
 
-	if($tipo_usuario != 'A'){
+	if($tipo_usuario != 'V'){
 		header('Location:../index.php');
 	}
 ?>
@@ -50,7 +50,7 @@
 												';
 												break;
 										case 'A': echo '<li class="nav-item">
-														<a class="nav-link" href="administracion.php">Usuarios</a>
+														<a class="nav-link" href="gestionarUsuarios.php">Usuarios</a>
 													</li>
 													<li class="nav-item">
 														<a class="nav-link" href="gestionarMarcas.php">Marcas</a>
@@ -86,24 +86,16 @@
 
                 <div class = "row">
 						<div class = "col">
-                        <h2 id="titulo"><?php 
-                                            if(!$_GET["mochila"]){
-                                                echo 'Nueva Mochila';
-                                                $metodo='post';
-                                                $ruta='altaMochila.php';
-                                            }else{
-                                                echo 'Modificar Mochila';
-                                                $metodo='get';
-                                                $ruta='modificarMochila.php';
-                                            }
-
-                                        ?>
-                        </h2>
-                        <form class="needs-validation" method="<?php echo $metodo; ?>" action="../control/<?php echo $ruta;?>">
+                        <h2 id="titulo">Nueva mochila</h2>
+                        <form class="needs-validation" method="post" action="../control/altaMochila.php">
                             <div class="form-row">
                                 <div class="form-group col-4">
                                     <label for="nombre">Nombre</label>
                                     <input type="text" class="form-control" id="nombre" name="nombre" placeholder=""  value="" required>
+                                </div>
+                                <div class="form-group col-4">
+                                    <label for="descripcion">Descripcion</label>
+                                    <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder=""  value="" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="id_marca">Marca</label>
@@ -113,7 +105,7 @@
 
                                     $con = vConectar();
 
-                                    $marca = ("SELECT id_marca,nombre_marca FROM marcas");
+                                    $marca = ("SELECT id_marca,nombre FROM marcas");
 
                                     $guarda_marca = pg_query($con, $marca);
 
@@ -146,14 +138,14 @@
                                     <input type="text" class="form-control" id="precio" name="precio" placeholder="" value="" required>
                                 </div>
                                 <div class="form-group col">
-                                    <label for="existencia">Existencia</label>
+                                    <label for="cantidad">Cantidad</label>
                                     <input type="number" class="form-control" id="cantidad" name="cantidad" max="10000" min="0" step="1" placeholder="" value="" required>
                                 </div>
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="imagen">Imagen</label>
-                                    <input type="file" class="form-control-file" id="imagen" name="imagen" value="">
+                                    <input type="file" class="form-control-file" id="imagen" name="imagen" value="" required>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-primary" name="enviar">Enviar</button>
@@ -169,6 +161,7 @@
 						    <tr>
                               <th scope="col">Imagen</th>
 						      <th scope="col">Nombre</th>
+						      <th scope="col">Marca</th>
                               <th scope="col">Descuento</th>
                               <th scope="col">Tama&ntilde;o</th>
                               <th scope="col">Precio</th>
@@ -182,15 +175,20 @@
 						  		include_once('../model/conexion.php');
 
 						  		$con = vConectar();
-	                    		$query=("SELECT id_mochila,imagen,nombre,descuento,tamano,precio,existencia,id_marca FROM mochilas");
+	                    		$query=("SELECT id_mochila,imagen,nombre,descripcion,descuento,tamano,precio,cantidad,id_marca FROM mochilas");
 	                    		$res=pg_query($con,$query);
 
 	                    		while ($f=pg_fetch_array($res)) {
+	                    			$id_marca = $f['id_marca'];
+	                    			$cons_marca=("SELECT nombre FROM marcas WHERE id_marca = $id_marca");
+	                    			$marc=pg_query($con,$cons_marca);
+	                    			$m=pg_fetch_array($marc);
 						  	?>
 						  		<tr>
-                                    <td><img src="../img/<?php echo $f['imagen']?>"</td>
+                                    <td><img class="imagenConsulta" src="../img/<?php echo $f['imagen']?>"></td>
                                     <td><?php echo $f['nombre']?></td>
-                                    <td>%<?php echo $f['descuento'] * 100;?></td>
+                                    <td><?php echo $m['nombre']?></td>
+                                    <td><?php echo $f['descuento'] * 100;?>%</td>
                                     <td><?php switch($f['tamano']){ 
                                                     case 'G':   echo 'Grande'; 
                                                                 break;
@@ -200,8 +198,8 @@
                                                                 break;
                                                 }?></td>
                                     <td>$<?php echo $f['precio']?></td>
-                                    <td><?php echo $f['existencia']?></td>
-                                    <td><a href="#titulo?nombre=<?php echo $f['nombre']?>?id_marca=<?php echo $f['id_marca']?>?descuento=<?php echo $f['descuento']?>?precio=<?php echo $f['precio']?>?tamano=<?php echo $f['tamano']?>?cantidad=<?php echo $f['cantidad']?>"><i class="fas fa-edit"></i></a></td>
+                                    <td><?php echo $f['cantidad']?></td>
+                                    <td><a class = "editar" href="editarMochila.php?nombre=<?php echo $f['nombre']?>&descripcion=<?php echo $f['descripcion']?>&id_marca=<?php echo $f['id_marca']?>&marca=<?php echo $m['nombre']?>&descuento=<?php echo $f['descuento']?>&tamano=<?php echo $f['tamano']?>&precio=<?php echo $f['precio']?>&cantidad=<?php echo $f['cantidad']?>&imagen=<?php echo $f['imagen']?>&id_mochila=<?php echo $f['id_mochila']?>"><i class="fas fa-edit"></i></a></td>
 							        <td><a href="../control/bajaMochila.php?mochila=<?php echo $f['id_mochila']?>"><i class="fas fa-trash-alt"></i></a></td>
 							    </tr>
 						  	<?php
@@ -232,5 +230,6 @@
 			</div>
 			<script src="../js/jquery-3.1.1.js"></script>
 			<script src="../js/bootstrap.js"></script>
+			<script src="../js/main.js"></script>
       	</body>
 </html>

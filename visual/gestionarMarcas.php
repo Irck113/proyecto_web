@@ -50,7 +50,7 @@
 												';
 												break;
 										case 'A': echo '<li class="nav-item">
-														<a class="nav-link" href="administracion.php">Usuarios</a>
+														<a class="nav-link" href="gestionarUsuarios.php">Usuarios</a>
 													</li>
 													<li class="nav-item">
 														<a class="nav-link" href="gestionarMarcas.php">Marcas</a>

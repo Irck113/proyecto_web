@@ -31,7 +31,7 @@
 								<?php 
 									switch($tipo_usuario){
 										case 'C': echo '<li class="nav-item">
-														<a class="nav-link" href="#">Carrito</a>
+														<a class="nav-link" href="carrito.php">Carrito</a>
 													</li>
 													<li class="nav-item dropdown">
 														<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -46,7 +46,7 @@
 												';
 												break;
 										case 'A': echo '<li class="nav-item">
-														<a class="nav-link" href="administracion.php">Usuarios</a>
+														<a class="nav-link" href="gestionarUsuarios.php">Usuarios</a>
 													</li>
 													<li class="nav-item">
 														<a class="nav-link" href="gestionarMarcas.php">Marcas</a>
